@@ -1,1 +1,4 @@
-﻿Console.WriteLine("Hello, World!");
+﻿using ConsoleOfTheDamned.Terminal.Core;
+
+var game = new Game();
+Game.Run();
