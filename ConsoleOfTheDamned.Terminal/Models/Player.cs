@@ -9,7 +9,7 @@ public class Player
     public int Damage { get; private set; }
     public int Gold { get; private set; }
     public int? ManaPoints { get; private set; }
-    public int BloodVials { get; private set; } // limited heals
+    public int BloodVials { get; private set; }
 
     public bool IsAlive => HealthPoints > 0;
 
@@ -46,8 +46,10 @@ public class Player
         HealthPoints = Math.Min(MaxHealthPoints, HealthPoints + heal);
         BloodVials--;
         Console.WriteLine(
-            Colors.Flavor("🧪 You drink a blood vial and recover ") + Colors.Highlight($"{heal}") + Colors.Flavor(" HP. (") +
-            Colors.Highlight($"{HealthPoints}/{MaxHealthPoints}") + Colors.Flavor(" HP, ") + Colors.Highlight($"{BloodVials}") + Colors.Flavor(" left)")
+            Colors.Flavor("🧪 You drink a blood vial and recover ") + Colors.Highlight($"{heal}") +
+            Colors.Flavor(" HP. (") +
+            Colors.Highlight($"{HealthPoints}/{MaxHealthPoints}") + Colors.Flavor(" HP, ") +
+            Colors.Highlight($"{BloodVials}") + Colors.Flavor(" left)")
         );
     }
 
@@ -55,13 +57,16 @@ public class Player
     {
         int heal = Math.Max(2, MaxHealthPoints / 10);
         HealthPoints = Math.Min(MaxHealthPoints, HealthPoints + heal);
-        Console.WriteLine(Colors.Flavor("🛌 You doze beneath the monitor’s glow. ") + Colors.Highlight($"+{heal}") + Colors.Flavor(" HP (") + Colors.Highlight($"{HealthPoints}/{MaxHealthPoints}") + Colors.Flavor(")."));
+        Console.WriteLine(Colors.Flavor("🛌 You doze beneath the monitor’s glow. ") + Colors.Highlight($"+{heal}") +
+                          Colors.Flavor(" HP (") + Colors.Highlight($"{HealthPoints}/{MaxHealthPoints}") +
+                          Colors.Flavor(")."));
     }
 
     public void AddGold(int amount)
     {
         Gold += amount;
-        Console.WriteLine(Colors.Flavor("🪙 Looted ") + Colors.Highlight($"{amount}") + Colors.Flavor(" gold. Total: ") + Colors.Highlight($"{Gold}") + Colors.Flavor("."));
+        Console.WriteLine(Colors.Flavor("🪙 Looted ") + Colors.Highlight($"{amount}") +
+                          Colors.Flavor(" gold. Total: ") + Colors.Highlight($"{Gold}") + Colors.Flavor("."));
     }
 
     public void TakeDamage(int amount)
