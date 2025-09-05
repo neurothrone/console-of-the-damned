@@ -1,4 +1,4 @@
-namespace ConsoleOfTheDamned.Terminal;
+namespace ConsoleOfTheDamned.Terminal.Utils;
 
 public static class Colors
 {

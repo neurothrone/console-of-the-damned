@@ -1,3 +1,5 @@
+using ConsoleOfTheDamned.Terminal.Utils;
+
 namespace ConsoleOfTheDamned.Terminal.Models;
 
 public class Player

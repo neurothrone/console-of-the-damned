@@ -1,4 +1,5 @@
 using ConsoleOfTheDamned.Terminal.Models;
+using ConsoleOfTheDamned.Terminal.Utils;
 
 namespace ConsoleOfTheDamned.Terminal.Core;
 
