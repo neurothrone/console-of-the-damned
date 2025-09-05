@@ -84,7 +84,8 @@ public class Game
     private static void Adventure(Player player)
     {
         var enemy = CreateRandomEnemy(player);
-        Console.WriteLine("\n" + Colors.Flavor("👁️ The screen flickers. A ") + Colors.Warning(enemy.Name) + Colors.Flavor(" materializes!"));
+        Console.WriteLine("\n" + Colors.Flavor("👁️ The screen flickers. A ") + Colors.Warning(enemy.Name) +
+                          Colors.Flavor(" materializes!"));
 
         // Combat loop
         while (player.IsAlive && enemy.IsAlive)
@@ -128,7 +129,8 @@ public class Game
         if (!player.IsAlive || enemy.IsAlive)
             return;
 
-        Console.WriteLine("\n" + Colors.Highlight("✔ ") + Colors.Warning(enemy.Name) + Colors.Flavor(" collapses into static and dust."));
+        Console.WriteLine("\n" + Colors.Highlight("✔ ") + Colors.Warning(enemy.Name) +
+                          Colors.Flavor(" collapses into static and dust."));
         int reward = enemy.GoldReward + Rng.Next(0, 3);
         player.AddGold(reward);
         Console.WriteLine(Colors.Flavor("— ") + Colors.Flavor(LootLines[Rng.Next(LootLines.Length)]));
@@ -138,7 +140,10 @@ public class Game
     {
         int dmg = player.AttackRoll(Rng);
         enemy.TakeDamage(dmg);
-        Console.WriteLine("🗡️ " + Colors.Highlight(player.Name) + Colors.Flavor(" hits ") + Colors.Warning(enemy.Name) + Colors.Flavor(" for ") + Colors.Warning($"{dmg}") + Colors.Flavor(" damage (Enemy HP: ") + Colors.Highlight($"{enemy.HealthPoints}") + Colors.Flavor(")."));
+        Console.WriteLine("🗡️" + Colors.Highlight(player.Name) + Colors.Flavor(" hits ") +
+                          Colors.Warning(enemy.Name) + Colors.Flavor(" for ") + Colors.Warning($"{dmg}") +
+                          Colors.Flavor(" damage (Enemy HP: ") + Colors.Highlight($"{enemy.HealthPoints}") +
+                          Colors.Flavor(")."));
     }
 
     private static void EnemyAttack(Player player, Enemy enemy)
@@ -146,7 +151,10 @@ public class Game
         if (!enemy.IsAlive) return;
         int dmg = enemy.AttackRoll(Rng);
         player.TakeDamage(dmg);
-        Console.WriteLine("👹 " + Colors.Warning(enemy.Name) + Colors.Flavor(" strikes you for ") + Colors.Warning($"{dmg}") + Colors.Flavor(" damage! (") + Colors.Highlight($"{player.HealthPoints}") + Colors.Flavor("/") + Colors.Highlight($"{player.MaxHealthPoints}") + Colors.Flavor(" HP)"));
+        Console.WriteLine("👹 " + Colors.Warning(enemy.Name) + Colors.Flavor(" strikes you for ") +
+                          Colors.Warning($"{dmg}") + Colors.Flavor(" damage! (") +
+                          Colors.Highlight($"{player.HealthPoints}") + Colors.Flavor("/") +
+                          Colors.Highlight($"{player.MaxHealthPoints}") + Colors.Flavor(" HP)"));
     }
 
     private static bool TryRun() => Rng.NextDouble() < 0.5;
@@ -169,7 +177,8 @@ public class Game
     {
         Console.WriteLine("\n" + Colors.Arcane("Choose your curse (class):"));
         Console.WriteLine(Colors.Highlight("1) Hellwalker") + Colors.Flavor(" — sturdy, consistent damage"));
-        Console.WriteLine(Colors.Highlight("2) Bone Weaver") + Colors.Flavor(" — fragile, higher damage, a touch of mana"));
+        Console.WriteLine(Colors.Highlight("2) Bone Weaver") +
+                          Colors.Flavor(" — fragile, higher damage, a touch of mana"));
         Console.WriteLine(Colors.Highlight("3) Shadow Bard") + Colors.Flavor(" — in-between, dangerously stylish"));
 
         while (true)
@@ -213,12 +222,29 @@ public class Game
         Console.OutputEncoding = System.Text.Encoding.UTF8;
         Console.Clear();
 
-        Console.WriteLine("╔══════════════════════════════════════════════════════════╗");
-        Console.WriteLine("║                                                          ║");
-        Console.WriteLine("║               C O N S O L E   O F   T H E                ║");
-        Console.WriteLine("║                      D  A  M  N  E  D                    ║");
-        Console.WriteLine("║                                                          ║");
-        Console.WriteLine("╚══════════════════════════════════════════════════════════╝");
-        Console.WriteLine("A text-based crawler where the terminal stares back.\n");
+        // Frame (light gray / "flavor")
+        Console.WriteLine(Colors.Flavor("╔══════════════════════════════════════════════════════════╗"));
+        Console.WriteLine(Colors.Flavor("║                                                          ║"));
+
+        // Title lines (keep exact spacing so the box stays aligned)
+        Console.WriteLine(
+            "║               " +
+            Colors.Arcane("C O N S O L E   O F   T H E") +
+            "                ║"
+        );
+        Console.WriteLine(
+            "║                    " +
+            Colors.Warning("D  A  M  N  E  D") +
+            "                      ║"
+        );
+
+        Console.WriteLine(Colors.Flavor("║                                                          ║"));
+        Console.WriteLine(Colors.Flavor("╚══════════════════════════════════════════════════════════╝"));
+
+        // Subtitle: flavor text with a bright-white accent glyph
+        Console.WriteLine(
+            Colors.Flavor("A text-based crawler where the terminal stares back ") +
+            Colors.Highlight("☠") + Colors.Flavor(".\n")
+        );
     }
 }
