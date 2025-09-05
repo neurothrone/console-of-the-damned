@@ -36,7 +36,7 @@ public class Game
     {
         PrintTitle();
 
-        Console.Write("State your name, lost soul: ");
+        Console.Write(Colors.Highlight("State your name, lost soul: "));
         var name = NonEmptyInput();
 
         var player = CreatePlayerViaClassChoice(name);
@@ -45,12 +45,12 @@ public class Game
         while (running && player.IsAlive)
         {
             Console.WriteLine();
-            Console.WriteLine("=== Console of the Damned ===");
-            Console.WriteLine("1) Venture forth");
-            Console.WriteLine("2) Rest");
-            Console.WriteLine("3) Status");
-            Console.WriteLine("4) Quit");
-            Console.Write("Damned> ");
+            Console.WriteLine(Colors.Arcane("=== Console of the Damned ==="));
+            Console.WriteLine(Colors.Highlight("1) Venture forth"));
+            Console.WriteLine(Colors.Highlight("2) Rest"));
+            Console.WriteLine(Colors.Highlight("3) Status"));
+            Console.WriteLine(Colors.Highlight("4) Quit"));
+            Console.Write(Colors.Flavor("Damned> "));
 
             string choice = Console.ReadLine()?.Trim() ?? "";
             switch (choice)
@@ -66,32 +66,32 @@ public class Game
                     break;
                 case "4":
                     running = false;
-                    Console.WriteLine("The console fades… the whispers do not.");
+                    Console.WriteLine(Colors.Flavor("The console fades… the whispers do not."));
                     break;
                 default:
-                    Console.WriteLine("Unrecognized command. The terminal chuckles without a voice.");
+                    Console.WriteLine(Colors.Warning("Unrecognized command. The terminal chuckles without a voice."));
                     break;
             }
         }
 
         if (!player.IsAlive)
-            Console.WriteLine("\n💀 GAME OVER: The console etches a new curse in the log.");
+            Console.WriteLine("\n" + Colors.Warning("💀 GAME OVER: The console etches a new curse in the log."));
 
-        Console.WriteLine("\n(Press Enter to sever the connection…)");
+        Console.WriteLine("\n" + Colors.Flavor("(Press Enter to sever the connection…)"));
         Console.ReadLine();
     }
 
     private static void Adventure(Player player)
     {
         var enemy = CreateRandomEnemy(player);
-        Console.WriteLine($"\n👁️ The screen flickers. A {enemy.Name} materializes!");
+        Console.WriteLine("\n" + Colors.Flavor("👁️ The screen flickers. A ") + Colors.Warning(enemy.Name) + Colors.Flavor(" materializes!"));
 
         // Combat loop
         while (player.IsAlive && enemy.IsAlive)
         {
             Console.WriteLine();
-            Console.WriteLine(string.Join("  |  ", BattleActions));
-            Console.Write("Damned/Battle> ");
+            Console.WriteLine(Colors.Highlight(string.Join("  |  ", BattleActions)));
+            Console.Write(Colors.Flavor("Damned/Battle> "));
             var pick = Console.ReadLine()?.Trim();
 
             if (pick == "1")
@@ -111,14 +111,14 @@ public class Game
                         break;
                     }
                     case "3" when TryRun():
-                        Console.WriteLine("🏃 You slip between lines of code and vanish.");
+                        Console.WriteLine(Colors.Flavor("🏃 You slip between lines of code and vanish."));
                         return;
                     case "3":
-                        Console.WriteLine("The shadows hang. Escape failed!");
+                        Console.WriteLine(Colors.Warning("The shadows hang. Escape failed!"));
                         EnemyAttack(player, enemy);
                         break;
                     default:
-                        Console.WriteLine("Hesitation invites pain. The foe strikes!");
+                        Console.WriteLine(Colors.Warning("Hesitation invites pain. The foe strikes!"));
                         EnemyAttack(player, enemy);
                         break;
                 }
@@ -128,17 +128,17 @@ public class Game
         if (!player.IsAlive || enemy.IsAlive)
             return;
 
-        Console.WriteLine($"\n✔ {enemy.Name} collapses into static and dust.");
+        Console.WriteLine("\n" + Colors.Highlight("✔ ") + Colors.Warning(enemy.Name) + Colors.Flavor(" collapses into static and dust."));
         int reward = enemy.GoldReward + Rng.Next(0, 3);
         player.AddGold(reward);
-        Console.WriteLine("— " + LootLines[Rng.Next(LootLines.Length)]);
+        Console.WriteLine(Colors.Flavor("— ") + Colors.Flavor(LootLines[Rng.Next(LootLines.Length)]));
     }
 
     private static void PlayerAttack(Player player, Enemy enemy)
     {
         int dmg = player.AttackRoll(Rng);
         enemy.TakeDamage(dmg);
-        Console.WriteLine($"🗡️ {player.Name} hits {enemy.Name} for {dmg} damage (Enemy HP: {enemy.HealthPoints}).");
+        Console.WriteLine("🗡️ " + Colors.Highlight(player.Name) + Colors.Flavor(" hits ") + Colors.Warning(enemy.Name) + Colors.Flavor(" for ") + Colors.Warning($"{dmg}") + Colors.Flavor(" damage (Enemy HP: ") + Colors.Highlight($"{enemy.HealthPoints}") + Colors.Flavor(")."));
     }
 
     private static void EnemyAttack(Player player, Enemy enemy)
@@ -146,8 +146,7 @@ public class Game
         if (!enemy.IsAlive) return;
         int dmg = enemy.AttackRoll(Rng);
         player.TakeDamage(dmg);
-        Console.WriteLine(
-            $"👹 {enemy.Name} strikes you for {dmg} damage! ({player.HealthPoints}/{player.MaxHealthPoints} HP)");
+        Console.WriteLine("👹 " + Colors.Warning(enemy.Name) + Colors.Flavor(" strikes you for ") + Colors.Warning($"{dmg}") + Colors.Flavor(" damage! (") + Colors.Highlight($"{player.HealthPoints}") + Colors.Flavor("/") + Colors.Highlight($"{player.MaxHealthPoints}") + Colors.Flavor(" HP)"));
     }
 
     private static bool TryRun() => Rng.NextDouble() < 0.5;
@@ -168,10 +167,10 @@ public class Game
 
     private static Player CreatePlayerViaClassChoice(string name)
     {
-        Console.WriteLine("\nChoose your curse (class):");
-        Console.WriteLine("1) Hellwalker — sturdy, consistent damage");
-        Console.WriteLine("2) Bone Weaver — fragile, higher damage, a touch of mana");
-        Console.WriteLine("3) Shadow Bard — in-between, dangerously stylish");
+        Console.WriteLine("\n" + Colors.Arcane("Choose your curse (class):"));
+        Console.WriteLine(Colors.Highlight("1) Hellwalker") + Colors.Flavor(" — sturdy, consistent damage"));
+        Console.WriteLine(Colors.Highlight("2) Bone Weaver") + Colors.Flavor(" — fragile, higher damage, a touch of mana"));
+        Console.WriteLine(Colors.Highlight("3) Shadow Bard") + Colors.Flavor(" — in-between, dangerously stylish"));
 
         while (true)
         {

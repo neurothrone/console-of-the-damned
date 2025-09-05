@@ -38,7 +38,7 @@ public class Player
     {
         if (BloodVials <= 0)
         {
-            Console.WriteLine("✖ Your blood vials are empty—the console hums disapprovingly.");
+            Console.WriteLine(Colors.Warning("✖ Your blood vials are empty—the console hums disapprovingly."));
             return;
         }
 
@@ -46,20 +46,22 @@ public class Player
         HealthPoints = Math.Min(MaxHealthPoints, HealthPoints + heal);
         BloodVials--;
         Console.WriteLine(
-            $"🧪 You drink a blood vial and recover {heal} HP. ({HealthPoints}/{MaxHealthPoints} HP, {BloodVials} left)");
+            Colors.Flavor("🧪 You drink a blood vial and recover ") + Colors.Highlight($"{heal}") + Colors.Flavor(" HP. (") +
+            Colors.Highlight($"{HealthPoints}/{MaxHealthPoints}") + Colors.Flavor(" HP, ") + Colors.Highlight($"{BloodVials}") + Colors.Flavor(" left)")
+        );
     }
 
     public void Rest()
     {
         int heal = Math.Max(2, MaxHealthPoints / 10);
         HealthPoints = Math.Min(MaxHealthPoints, HealthPoints + heal);
-        Console.WriteLine($"🛌 You doze beneath the monitor’s glow. +{heal} HP ({HealthPoints}/{MaxHealthPoints}).");
+        Console.WriteLine(Colors.Flavor("🛌 You doze beneath the monitor’s glow. ") + Colors.Highlight($"+{heal}") + Colors.Flavor(" HP (") + Colors.Highlight($"{HealthPoints}/{MaxHealthPoints}") + Colors.Flavor(")."));
     }
 
     public void AddGold(int amount)
     {
         Gold += amount;
-        Console.WriteLine($"🪙 Looted {amount} gold. Total: {Gold}.");
+        Console.WriteLine(Colors.Flavor("🪙 Looted ") + Colors.Highlight($"{amount}") + Colors.Flavor(" gold. Total: ") + Colors.Highlight($"{Gold}") + Colors.Flavor("."));
     }
 
     public void TakeDamage(int amount)
@@ -69,11 +71,15 @@ public class Player
 
     public void PrintStatus()
     {
-        Console.WriteLine(new string('─', 42));
-        Console.WriteLine($"🔮 {Name} the {ClassName}");
-        Console.WriteLine($"❤️ HP: {HealthPoints}/{MaxHealthPoints}   🗡️ Damage: {Damage}   🪙 Gold: {Gold}" +
-                          (ManaPoints.HasValue ? $"   ✨ Mana: {ManaPoints}" : ""));
-        Console.WriteLine($"🧪 Blood Vials: {BloodVials}");
-        Console.WriteLine(new string('─', 42));
+        Console.WriteLine(Colors.Gray + new string('─', 42) + Colors.Reset);
+        Console.WriteLine("🔮 " + Colors.Highlight(Name) + Colors.Flavor(" the ") + Colors.Arcane(ClassName));
+        Console.WriteLine(
+            Colors.Flavor("❤️ HP: ") + Colors.Highlight($"{HealthPoints}/{MaxHealthPoints}") +
+            Colors.Flavor("   🗡️ Damage: ") + Colors.Highlight($"{Damage}") +
+            Colors.Flavor("   🪙 Gold: ") + Colors.Highlight($"{Gold}") +
+            (ManaPoints.HasValue ? Colors.Flavor("   ✨ Mana: ") + Colors.Highlight($"{ManaPoints}") : string.Empty)
+        );
+        Console.WriteLine(Colors.Flavor("🧪 Blood Vials: ") + Colors.Highlight($"{BloodVials}"));
+        Console.WriteLine(Colors.Gray + new string('─', 42) + Colors.Reset);
     }
 }
