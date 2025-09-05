@@ -50,7 +50,7 @@ public class Game
             Console.WriteLine(Colors.Highlight("2) Rest"));
             Console.WriteLine(Colors.Highlight("3) Status"));
             Console.WriteLine(Colors.Highlight("4) Quit"));
-            Console.Write(Colors.Flavor("Damned> "));
+            Prompt("Damned");
 
             string choice = Console.ReadLine()?.Trim() ?? "";
             switch (choice)
@@ -92,7 +92,7 @@ public class Game
         {
             Console.WriteLine();
             Console.WriteLine(Colors.Highlight(string.Join("  |  ", BattleActions)));
-            Console.Write(Colors.Flavor("Damned/Battle> "));
+            Prompt("Damned/Battle");
             var pick = Console.ReadLine()?.Trim();
 
             if (pick == "1")
@@ -183,7 +183,7 @@ public class Game
 
         while (true)
         {
-            Console.Write("Damned/Class> ");
+            Prompt("Damned/Class");
             var pick = Console.ReadLine()?.Trim();
 
             switch (pick)
@@ -205,6 +205,11 @@ public class Game
                     break;
             }
         }
+    }
+
+    private static void Prompt(string path)
+    {
+        Console.Write(Colors.Arcane(path) + Colors.Warning(" › "));
     }
 
     private static string NonEmptyInput()
