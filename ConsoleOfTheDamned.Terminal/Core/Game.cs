@@ -20,7 +20,12 @@ public class Game
         "You pry a blinking coin from the dust—ominous… but valid tender.",
         "The pockets hold mostly lint and a little gold. Lint discarded.",
         "A ring from a cold finger; the console approves your bling.",
-        "A cracked sigil—useless, but the scattered gold is not."
+        "A cracked sigil—useless, but the scattered gold is not.",
+        "A rat scurries away, leaving behind a single shiny tooth. Valuable? Maybe.",
+        "You scoop up a handful of ash. Somehow it counts as currency.",
+        "A scroll written in an unknown language… but it folds into a decent wallet.",
+        "You find a mug labeled '#1 Cultist'. Inside: two coins and a lot of despair.",
+        "The corpse drops a half-eaten sandwich. You take the coins stuck in the bread."
     ];
 
     private static readonly string[] BattleActions =
